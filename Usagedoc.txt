@@ -1,0 +1,59 @@
+In App.tsx:
+import TaskList from './components/TaskList/TaskList';
+import TaskFilter from './components/TaskFilter/TaskFilter';
+import { Task } from './types';
+
+const tasks: Task[] = [
+  {
+    id: '1',
+    title: 'Task 1',
+    description: 'Finish the report',
+    status: 'pending',
+    priority: 'high',
+    dueDate: '2024-12-31',
+  },
+  {
+    id: '2',
+    title: 'Task 2',
+    description: 'Update client dashboard',
+    status: 'in-progress',
+    priority: 'medium',
+    dueDate: '2025-01-05',
+  },
+];
+
+<TaskFilter onFilterChange={handleFilterChange} />
+<TaskList
+  tasks={filteredTasks}
+  onStatusChange={handleStatusChange}
+  onDelete={handleDelete}
+/>
+
+Documentation
+TaskList
+
+Props:
+
+tasks: Array of task objects to render.
+
+onStatusChange(taskId, newStatus): Handles task status updates.
+
+onDelete(taskId): Deletes a task.
+
+TaskItem
+
+Displays an individual task’s details.
+
+Allows changing status and deleting tasks.
+
+Automatically updates styles based on task status and priority.
+
+TaskFilter
+
+Props:
+
+onFilterChange(filters): Called when status or priority filters are changed.
+
+Provides dropdowns for filtering tasks by status and priority.
+
+✅ This setup ensures each component is modular, easy to use, and type-safe with TypeScript.
