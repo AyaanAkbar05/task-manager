@@ -1,73 +1,66 @@
-# React + TypeScript + Vite
+# Reflection Questions
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1. Ensuring unique keys:
+Each task object includes a unique id property, which was used as the React key when rendering the list. This ensures stable identity for each task and prevents rendering issues when tasks are updated or removed.
 
-Currently, two official plugins are available:
+2. Filtering considerations:
+Filtering was implemented based on both status and priority. The logic checks if a filter is selected and matches it against each task; if not, it simply includes all tasks. This keeps the filtering simple, efficient, and easy to extend later.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+3. Handling state updates:
+When a task’s status changes, the component updates the task list state immutably using map()-creating a new array where only the matching task’s status is updated. This approach preserves React’s state immutability and triggers proper re-rendering.
 
-## React Compiler
+4. Conditional rendering challenges:
+The main challenge was keeping the UI consistent when no tasks matched the filters. This was solved by conditionally rendering a simple “No tasks found” message whenever the filtered list was empty.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Expanding the ESLint configuration
+ # Task Management App
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+A simple React + TypeScript application that manages and filters a list of tasks.
+It demonstrates dynamic list rendering, conditional rendering, key usage, and component composition using Tailwind CSS for styling.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Setup
+npm install
+npm run dev
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Then open the app in your browser at the URL shown in the terminal.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Components Overview
+1. TaskList
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Renders a list of tasks using unique keys (task.id).
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Receives props for tasks, status changes, and deletion.
+
+Uses conditional rendering to show a message if no tasks exist.
+
+2. TaskItem
+
+Displays details for an individual task.
+
+Allows users to change task status or delete a task.
+
+Applies different visual styles based on task status and priority.
+
+3. TaskFilter
+
+Provides dropdowns to filter tasks by status and priority.
+
+Calls onFilterChange whenever filters are updated.
+
+How It Works
+
+App.tsx holds the main task state and filter state.
+
+Filters are passed to TaskList after being updated by TaskFilter.
+
+Tasks are updated or deleted through callbacks from TaskItem.
+
+# Styling
+
+All components use Tailwind CSS for clean, responsive styling.
+
+
+
+
+This project focuses only on the required functionality — no extra features, just clear and modular React components.
